@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daftar Siswa - Versi Baru</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background: #f5f7fa; }
+        h1 { color: #2c3e50; }
+        ul { list-style: none; padding: 0; }
+        li { 
+            background: white; 
+            margin: 12px 0; 
+            padding: 16px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border-left: 4px solid #3498db;
+        }
+        .id { color: #7f8c8d; font-size: 0.9em; margin-bottom: 4px; }
+        .name { font-size: 1.1em; font-weight: bold; color: #2c3e50; }
+        .major { color: #3498db; }
+        .note { color: #e74c3c; font-style: italic; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Daftar Siswa (Versi Baru - Setelah Reengineering)</h1>
+    <ul>
+    {% for student in students %}
+        <li>
+            <div class="id">ID: {{ student.id }}</div>
+            <div class="name">{{ student.name }}</div>
+            <div class="major">Jurusan: {{ student.major }}</div>
+        </li>
+    {% endfor %}
+    </ul>
+    <p class="note">✅ Nama tidak diubah (konsisten), label "Jurusan" jelas, dan struktur kode modular.</p>
+</body>
+</html>
