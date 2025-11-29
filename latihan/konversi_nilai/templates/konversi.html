@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Konversi Nilai</title>
+    <style>
+        .result-success { color: green; font-weight: bold; }
+        .result-error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>🔤 Konversi Nilai Huruf ke Angka</h2>
+    
+    <form method="POST">
+        <label for="huruf_input">Nilai Huruf (A-E):</label>
+        <input type="text" id="huruf_input" name="huruf" maxlength="1" required 
+               placeholder="Contoh: A, B, C">
+        <br><br>
+        <button type="submit">Konversi</button>
+    </form>
+
+    <hr>
+    
+    {% if nilai_angka is not none %}
+        <h3 class="result-success">
+            🎉 Nilai Angka untuk {{ huruf_input.upper() }} adalah: {{ "%.1f"|format(nilai_angka) }}
+        </h3>
+    {% elif huruf_input and request.method == "POST" %}
+        <h3 class="result-error">
+            ❌ Kesalahan: Nilai {{ huruf_input }} tidak valid. Harap masukkan A, B, C, D, atau E.
+        </h3>
+    {% endif %}
+
+</body>
+</html>
