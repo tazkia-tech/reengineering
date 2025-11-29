@@ -1,33 +1,30 @@
-from flask import Flask, render_template_string, request
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+# --- Logika Bisnis (Model/Service) ---
+def konversi_nilai_ke_angka(huruf):
+    """
+    Memetakan nilai huruf (A-E) ke nilai angka (IPK).
+    """
+    mapping = {"A": 4.0, "B": 3.0, "C": 2.0, "D": 1.0, "E": 0.0}
+    
+    return mapping.get(huruf.strip().upper()) 
+
+# --- View Function (Controller) ---
 @app.route("/", methods=["GET", "POST"])
 def konversi():
-    angka = None
+    nilai_angka = None
+    huruf_input = None
+    
     if request.method == "POST":
-        huruf = request.form["huruf"].upper()
-        # LOGIKA BISNIS: mapping nilai huruf → angka
-        mapping = {"A": 4.0, "B": 3.0, "C": 2.0, "D": 1.0, "E": 0.0}
-        angka = mapping.get(huruf, "Nilai tidak valid")
-
-    html = """
-    <!DOCTYPE html>
-    <html>
-    <head><title>Konversi Nilai</title></head>
-    <body>
-        <h2>🔤 Konversi Nilai Huruf ke Angka</h2>
-        <form method="POST">
-            Nilai Huruf (A-E): <input type="text" name="huruf" maxlength="1" required><br><br>
-            <button type="submit">Konversi</button>
-        </form>
-        {% if angka %}
-            <h3>Nilai Angka: {{ angka }}</h3>
-        {% endif %}
-    </body>
-    </html>
-    """
-    return render_template_string(html, angka=angka)
+        huruf_input = request.form.get("huruf", "")
+        
+        nilai_angka = konversi_nilai_ke_angka(huruf_input)
+    
+    return render_template("konversi.html", 
+                           nilai_angka=nilai_angka, 
+                           huruf_input=huruf_input)
 
 if __name__ == "__main__":
-    app.run(port=5013)
+    app.run(port=5013, debug=True)
